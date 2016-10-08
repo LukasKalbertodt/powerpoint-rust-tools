@@ -28,10 +28,17 @@ namespace high
                 {
                     String s = shape.TextFrame.TextRange.Text;
 
+                    /*string mydocpath =
+                        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\WriteLines.txt"))
+                    {
+                        outputFile.WriteLine(s);
+                    }*/
+
                     Process Program = new Process();
                     Program.StartInfo.FileName = "C:\\Users\\Lukas Kalbertodt\\AppData\\Local\\Programs\\Python\\Python35\\Scripts\\pygmentize.exe";
                     // Program.StartInfo.FileName = "C:\\Users\\Lukas Kalbertodt\\echoargs.exe";
-                    Program.StartInfo.Arguments = "-l rust  -f rtf -O style=solarizedlight";
+                    Program.StartInfo.Arguments = "-l rust  -f rtf -O style=solarizedlight -O encoding=utf8";
                     // Program.StartInfo.WorkingDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "/Build." + this.name;
                     Program.StartInfo.RedirectStandardOutput = true;
                     Program.StartInfo.RedirectStandardInput = true;
@@ -39,11 +46,17 @@ namespace high
                     Program.StartInfo.CreateNoWindow = true;
                     Program.StartInfo.UseShellExecute = false;
                     Program.Start();
-                    Program.StandardInput.Write(s);
-                    Program.StandardInput.Flush();
-                    Program.StandardInput.Close();
+                    StreamWriter utf8Writer = new StreamWriter(Program.StandardInput.BaseStream, Encoding.UTF8);
+                    utf8Writer.Write(s);
+                    utf8Writer.Flush();
+                    utf8Writer.Close();
                     String rtfString = Program.StandardOutput.ReadToEnd();
                     Program.WaitForExit(1000);
+                    
+                    /*using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\WriteLines.txt"))
+                    {
+                        outputFile.WriteLine(rtfString);
+                    }*/
 
                     String err = Program.StandardError.ReadToEnd();
 
@@ -66,11 +79,18 @@ namespace high
                     }
 
                     // Restore clipboard content
-                    Clipboard.SetText((string)backupText);
+                    if (backupText != null)
+                    {
+                        Clipboard.SetText((string)backupText);
+                    }
+                    
 
                     // Set useful textbox properties
                     shape.TextEffect.FontName = "Fira Code Retina";
                     shape.TextFrame.TextRange.ParagraphFormat.Bullet.Type = PowerPoint.PpBulletType.ppBulletNone;
+                    shape.TextFrame.TextRange.ParagraphFormat.SpaceAfter = 0;
+                    shape.TextFrame.TextRange.ParagraphFormat.SpaceBefore = 0;
+                    shape.TextFrame.TextRange.ParagraphFormat.SpaceWithin = 1.3f;
                 }
             }
         }

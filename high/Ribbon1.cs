@@ -64,7 +64,7 @@ namespace high
                     System.Diagnostics.Debug.WriteLine("err: " + err);
 
                     // Get the current cliboard content, save it for later and empty the clipboard
-                    var backupText = Clipboard.GetText().Clone();
+                    var backupText = (string)Clipboard.GetText().Clone();
                     Clipboard.Clear();
 
                     // Prepare and set the new clipboard contents
@@ -79,9 +79,9 @@ namespace high
                     }
 
                     // Restore clipboard content
-                    if (backupText != null)
+                    if (backupText != null && backupText != "")
                     {
-                        Clipboard.SetText((string)backupText);
+                        Clipboard.SetText(backupText);
                     }
                     
 

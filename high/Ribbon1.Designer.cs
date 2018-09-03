@@ -38,6 +38,8 @@
             this.tab1 = this.Factory.CreateRibbonTab();
             this.Highlight = this.Factory.CreateRibbonGroup();
             this.button1 = this.Factory.CreateRibbonButton();
+            this.colorSchemeBox = this.Factory.CreateRibbonEditBox();
+            this.fontBox = this.Factory.CreateRibbonEditBox();
             this.tab1.SuspendLayout();
             this.Highlight.SuspendLayout();
             this.SuspendLayout();
@@ -52,6 +54,8 @@
             // Highlight
             // 
             this.Highlight.Items.Add(this.button1);
+            this.Highlight.Items.Add(this.colorSchemeBox);
+            this.Highlight.Items.Add(this.fontBox);
             this.Highlight.Label = "Highlight";
             this.Highlight.Name = "Highlight";
             // 
@@ -63,6 +67,18 @@
             this.button1.Name = "button1";
             this.button1.ShowImage = true;
             this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
+            // 
+            // colorSchemeBox
+            // 
+            this.colorSchemeBox.Label = "color scheme";
+            this.colorSchemeBox.Name = "colorSchemeBox";
+            this.colorSchemeBox.Text = "solarizedlight";
+            // 
+            // fontBox
+            // 
+            this.fontBox.Label = "font";
+            this.fontBox.Name = "fontBox";
+            this.fontBox.Text = "Fira Code Retina";
             // 
             // Ribbon1
             // 
@@ -83,6 +99,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup Highlight;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox colorSchemeBox;
+        internal Microsoft.Office.Tools.Ribbon.RibbonEditBox fontBox;
     }
 
     partial class ThisRibbonCollection
